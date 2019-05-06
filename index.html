@@ -15,52 +15,42 @@
 
     </nav>
 
-    <div id="game-container">
-
-    </div>
 
     <button id="hi-score-btn"> HiScores
     </button>
 
+    <button id="log-out-btn" class="hidden"> Logout </button>
+
     <form id="create-username">
         <input id="user" type="text" placeholder="select an user name">
-
         <select name="" id="user-diffculty">
             <option value="Easy">Easy</option>
             <option value="Intermediate">Intermediate</option>
             <option value="Hard">Hard</option>
         </select>
-
-
         <button id="" class="">Start GAME</button>
     </form>
-
-
-
-
-
+    <div id="current-player">
+    </div>
 
     <table id="hi-score-table" class="hidden">
         <caption> Hi-Score</caption>
-        <th>player</th>
-        <th>difficulty</th>
-        <th>score</th>
-        <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>2</td>
-            <td>3</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-        </tr>
+        <th>Player</th>
+        <th>Difficulty</th>
+        <th>Score</th>
+        <tbody id="hi-score-body">
+            <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+            </tr>
+        </tbody>
     </table>
+
+    <div id="game-container">
+
+    </div>
+
     <script src="index.js"></script>
 </body>
 

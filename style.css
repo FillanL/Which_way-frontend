@@ -6,13 +6,13 @@ th {
 }
 
 td {
-    background-color: aliceblue;
+    background-color: white;
 }
 
 table,
 th {
     padding: 20px;
-    background-color: bisque;
+    background-color: rgb(228, 158, 72);
 }
 
 .hidden {
