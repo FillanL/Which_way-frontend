@@ -9,12 +9,59 @@ const scoresBody = document.querySelector('#hi-score-body')
 const newUser = document.querySelector('#user')
 const userDiffcultySelect = document.querySelector('#user-diffculty')
 const currentPlayer = document.querySelector('#current-player')
-const logOutBtn = document.querySelector("#log-out-btn")
+const logOutBtn = document.querySelector('#log-out-btn')
+const startGameBtn = document.querySelector('#game-start-btn')
 let loggedInUser;
 let keySequenceArray = []
 // *****************************************
 // end of delcaration
+// ******************************************
+// Start of all declared function that will be called
 // *****************************************
+
+//function to render random sequence
+const renderSequence = function () {
+    keySequenceArray.forEach(num => {
+        switch (num) {
+            case 37:
+                gameContainer.innerHTML += `
+        <div class="letter-tile">
+        <i class="far fa-arrow-alt-circle-left fa-2x "></i>
+        </div>
+        `
+                break;
+            case 38:
+                gameContainer.innerHTML += `
+        <div class="letter-tile">
+        <i class="far fa-arrow-alt-circle-up fa-2x "></i>
+        </div>
+        `
+                break;
+
+            case 39:
+                gameContainer.innerHTML += `
+        <div class="letter-tile">
+        <i class="far fa-arrow-alt-circle-right fa-2x "></i>
+        </div>
+        `
+                break;
+
+            case 40:
+                gameContainer.innerHTML += `
+        <div class="letter-tile">
+        <i class="far fa-arrow-alt-circle-down fa-2x "></i>
+        </div>
+        `
+                break;
+
+            default:
+                break;
+        }
+    })
+}
+// *****************************************
+// end of delcaration
+// ******************************************
 
 // trying to create username and a game instance at the same time....
 newUserForm.addEventListener('submit', (e) => {
@@ -64,7 +111,7 @@ logOutBtn.addEventListener('click', (e) => {
 // toggle hiscore menu when hiscore btn is clicked
 hiScoreBtn.addEventListener('click', (e) => {
     // ternary -- add/remove hidden class to table
-    hiScoreTbl.classList.value.includes('hidden') ? hiScoreTbl.classList.remove("hidden") : hiScoreTbl.classList.add("hidden");
+    hiScoreTbl.classList.value.includes('hidden') ? hiScoreTbl.classList.remove('hidden') : hiScoreTbl.classList.add('hidden');
 
     if (hiScoreTbl.classList.value.includes('hidden') === false) {
         scoresBody.innerHTML = ``
@@ -104,15 +151,34 @@ const rando = (x) => {
 rando(4)
 console.log(keySequenceArray)
 //User must be logged in
-document.addEventListener('keydown', e => {
-    if (e.keyCode === keySequenceArray[0]) {
-        console.log('correct')
-        keySequenceArray.shift()
-    } else {
-        console.log('smh')
-        keySequenceArray = []
-        rando(4)
-    }
+startGameBtn.addEventListener('click', e => {
+    // have countdown
+    // load sequence
 
-    // console.log(rando(4), keySequenceArray)
+    renderSequence()
+    // listening for user input
+    document.addEventListener('keydown', e => {
+        if (e.keyCode === keySequenceArray[0]) {
+            // debugger
+            console.log('correct')
+
+            keySequenceArray.shift()
+
+            if (keySequenceArray.length === 0) {
+                rando(4)
+                gameContainer.innerHTML = ''
+                renderSequence()
+            }
+        } else {
+            console.log('smh')
+            keySequenceArray = []
+            rando(4)
+            gameContainer.innerHTML = ''
+            renderSequence()
+        }
+        // console.log(rando(4), keySequenceArray)
+    })
+    // gameContainer.innerHTML
+    // track score
+
 })

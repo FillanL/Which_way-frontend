@@ -21,15 +21,28 @@ th {
 
 /* takennnnn */
 .letter-tile {
-    width: 2em;
-    height: 2em;
+    width: 3em;
+    height: 3em;
     margin: 0.25em;
-    background: #bf0741;
+    background: grey;
     text-align: center;
-    font-size: 2em;
-    line-height: 2em;
+    font-size: 3em;
+    line-height: 3em;
     text-transform: uppercase;
-    color: white;
+    color: rgb(236, 67, 67);
     font-weight: bold;
     border-radius: .5em;
+}
+
+#game-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.red {
+    color: rgb(236, 67, 67);
+}
+
+.green {
+    color: #38f014;
 }
