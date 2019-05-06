@@ -11,6 +11,7 @@ const userDiffcultySelect = document.querySelector('#user-diffculty')
 const currentPlayer = document.querySelector('#current-player')
 const logOutBtn = document.querySelector('#log-out-btn')
 const startGameBtn = document.querySelector('#game-start-btn')
+
 let loggedInUser;
 let keySequenceArray = []
 // *****************************************
@@ -21,43 +22,57 @@ let keySequenceArray = []
 
 //function to render random sequence
 const renderSequence = function () {
-    keySequenceArray.forEach(num => {
-        switch (num) {
+    // keySequenceArray.forEach(num => {
+
+    for (p = 0; p < keySequenceArray.length; p++) {
+        let arrow;
+        switch (keySequenceArray[p]) {
             case 37:
-                gameContainer.innerHTML += `
-        <div class="letter-tile">
-        <i class="far fa-arrow-alt-circle-left fa-2x "></i>
-        </div>
-        `
+                arrow = "fa-arrow-alt-circle-left"
+
                 break;
             case 38:
-                gameContainer.innerHTML += `
-        <div class="letter-tile">
-        <i class="far fa-arrow-alt-circle-up fa-2x "></i>
-        </div>
-        `
+                arrow = "fa-arrow-alt-circle-up"
+
                 break;
 
             case 39:
-                gameContainer.innerHTML += `
-        <div class="letter-tile">
-        <i class="far fa-arrow-alt-circle-right fa-2x "></i>
-        </div>
-        `
+                arrow = "fa-arrow-alt-circle-right"
+
                 break;
 
             case 40:
-                gameContainer.innerHTML += `
-        <div class="letter-tile">
-        <i class="far fa-arrow-alt-circle-down fa-2x "></i>
-        </div>
-        `
+                arrow = "fa-arrow-alt-circle-down"
+
                 break;
 
             default:
+
                 break;
         }
-    })
+        gameContainer.innerHTML += `
+            <div id='${p}' class="letter-tile">
+            <i class="far ${arrow} fa-lg "></i>
+            </div>
+            `
+    }
+}
+
+const displaySequence = () => {
+    renderSequence()
+    setTimeout(() => {
+        const letterTiles = document.querySelectorAll('.letter-tile')
+        // debugger
+        letterTiles.forEach(
+            kid => {
+                // debugger
+                kid.children[0].classList.remove('fa-arrow-alt-circle-left', 'fa-arrow-alt-circle-right',
+                    'fa-arrow-alt-circle-up', 'fa-arrow-alt-circle-down', 'far')
+
+                kid.children[0].classList.add('fas', 'fa-question')
+            }
+        )
+    }, 5000);
 }
 // *****************************************
 // end of delcaration
@@ -155,16 +170,24 @@ startGameBtn.addEventListener('click', e => {
     // have countdown
     // load sequence
 
-    renderSequence()
+    displaySequence()
+    // renderSequence()
     // listening for user input
+    let consecIndex = 0
     document.addEventListener('keydown', e => {
         if (e.keyCode === keySequenceArray[0]) {
             // debugger
-            console.log('correct')
+            console.log('correct', e.key.slice(5).toLowerCase())
 
+            gameContainer.children[consecIndex].children[0].classList.remove(`fa-arrow-alt-circle-${e.key.slice(5).toLowerCase()}`, 'far', 'fas', 'fa-question')
+
+            gameContainer.children[consecIndex].children[0].classList.add('fa-check', 'fas', 'green')
+
+            consecIndex++;
             keySequenceArray.shift()
 
             if (keySequenceArray.length === 0) {
+                consecIndex = 0
                 rando(4)
                 gameContainer.innerHTML = ''
                 renderSequence()
@@ -175,6 +198,7 @@ startGameBtn.addEventListener('click', e => {
             rando(4)
             gameContainer.innerHTML = ''
             renderSequence()
+            consecIndex = 0
         }
         // console.log(rando(4), keySequenceArray)
     })
