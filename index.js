@@ -7,15 +7,49 @@ const hiScoreTbl = document.querySelector('#hi-score-table')
 const newUserForm = document.querySelector('#create-username')
 const scoresBody = document.querySelector('#hi-score-body')
 const newUser = document.querySelector('#user')
-const userDiffcultySelect = document.querySelector('#user-diffculty')
+const userDifficultySelect = document.querySelector('#user-diffculty')
 const currentPlayer = document.querySelector('#current-player')
 const logOutBtn = document.querySelector('#log-out-btn')
 const startGameBtn = document.querySelector('#game-start-btn')
+const gameScore = document.querySelector('#game-score')
 
-let active = false
+let gameActive = false;
+let allowKeyPress = false;
 let loggedInUser;
-let keySequenceArray = []
+let keySequenceArray = [];
 let currentScore = 0
+
+let time = document.getElementById('time')
+let seconds = 30;
+let minutes = 0;
+let numOfCards = 3
+let correctLine = 0;
+let delaySeconds;
+
+switch (userDifficultySelect.value) {
+    case "Easy":
+        numOfCards = 2
+        delaySeconds = 3000
+        break;
+
+    case "Intermediate":
+        numOfCards = 3
+        delaySeconds = 4000
+        break;
+
+    case "Hard":
+        numOfCards = 4
+        delaySeconds = 5000
+        break;
+
+    default:
+        numOfCards = 2
+        delaySeconds = 3000
+        break;
+
+}
+
+// let t;
 // *****************************************
 // end of delcaration
 // ******************************************
@@ -93,23 +127,24 @@ const rando = (x) => {
 
 //shows the key sequence
 const displaySequence = () => {
-    active = false
+    allowKeyPress = false
     renderSequence()
-    setTimeout(() => {
-        const letterTiles = document.querySelectorAll('.letter-tile')
-        // debugger
-        letterTiles.forEach(
-            kid => {
-                // debugger
-                kid.children[0].classList.remove('fa-arrow-alt-circle-left', 'fa-arrow-alt-circle-right',
-                    'fa-arrow-alt-circle-up', 'fa-arrow-alt-circle-down', 'far')
+    if (seconds > 3)
+        setTimeout(() => {
+            const letterTiles = document.querySelectorAll('.letter-tile')
+            // debugger
+            letterTiles.forEach(
+                kid => {
+                    // debugger
+                    kid.children[0].classList.remove('fa-arrow-alt-circle-left', 'fa-arrow-alt-circle-right',
+                        'fa-arrow-alt-circle-up', 'fa-arrow-alt-circle-down', 'far')
 
-                kid.children[0].classList.add('fas', 'fa-question')
-                active = true
-            }
-        )
+                    kid.children[0].classList.add('fas', 'fa-question')
+                    allowKeyPress = true
+                }
+            )
 
-    }, 3000);
+        }, delaySeconds);
 }
 
 //user input conditions
@@ -117,7 +152,7 @@ const checkUserInput = () => {
     // listening for user input
     let consecIndex = 0
     document.addEventListener('keydown', e => {
-        if (active === true) {
+        if (allowKeyPress === true) {
             if (e.keyCode === keySequenceArray[0]) {
                 // debugger
                 console.log('correct', e.key.slice(5).toLowerCase())
@@ -131,19 +166,25 @@ const checkUserInput = () => {
 
                 // try to have last check mark display
                 // setTimeout(() => {}, 5000)
-                if (keySequenceArray.length === 0) {
+                if (keySequenceArray.length === 0 && seconds !== 0) {
                     currentScore += 100
+                    gameScore.innerText = currentScore
                     consecIndex = 0
-                    rando(4)
+                    rando(numOfCards)
                     gameContainer.innerHTML = ''
                     displaySequence()
                     console.log(currentScore)
+                    correctLine += 1
+                    if (correctLine == 2) {
+                        ++numOfCards
+                    }
+
                 }
             } else {
                 console.log('smh')
                 keySequenceArray = []
                 gameContainer.innerHTML = ''
-                rando(4)
+                rando(numOfCards)
                 displaySequence()
                 consecIndex = 0
                 console.log(currentScore)
@@ -161,7 +202,7 @@ const checkUserInput = () => {
 // trying to create username and a game instance at the same time....
 newUserForm.addEventListener('submit', (e) => {
     e.preventDefault()
-    // console.log(userDiffcultySelect.value);
+    // console.log(userDifficultySelect.value);
     fetch('http://localhost:3000/api/v1/games', {
             method: 'POST',
             headers: {
@@ -171,7 +212,7 @@ newUserForm.addEventListener('submit', (e) => {
             body: JSON.stringify({
 
                 username: newUser.value,
-                difficulty: userDiffcultySelect.value
+                difficulty: userDifficultySelect.value
             }),
         })
         .then(res => res.json())
@@ -181,10 +222,11 @@ newUserForm.addEventListener('submit', (e) => {
             loggedInUser = player.username
             newUserForm.classList.add('hidden');
 
+            debugger
             currentPlayer.innerHTML = `
             <p> current player is ${loggedInUser}</p>
 
-            <h3>${userDiffcultySelect.value} MODE</h3>
+            <h3>${player.difficulty} MODE</h3>
             `
         })
     newUserForm.reset()
@@ -218,13 +260,50 @@ hiScoreBtn.addEventListener('click', (e) => {
 
 startGameBtn.addEventListener('click', e => {
     //starts clock
-
     // have countdown
+
+    // gameActive = true;
+    gameScore.classList.remove('hidden')
+    time.classList.remove('hidden')
     startGameBtn.classList.add('hidden')
-    rando(4)
+    rando(numOfCards)
     console.log(keySequenceArray)
 
     // load sequence 
     displaySequence()
     checkUserInput()
+    timer()
 })
+
+
+
+// 
+
+// let x = document.getElementsByTagName('h1')[0]
+// // start = document.getElementById('game-start-btn'),
+
+// let seconds = 10
+// let minutes = 0;
+// let t;
+
+function subtract() {
+    // seconds--;
+    if (seconds > 0) {
+        seconds--;
+        console.log(seconds)
+        // return
+
+        time.innerHTML = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "0") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+        timer();
+    }
+    if (seconds == 0) {
+        allowKeyPress = false
+        gameActive = false
+        time.innerHTML = ""
+        time.innerText = "Game Over!!"
+    }
+}
+
+function timer() {
+    t = setTimeout(subtract, 1000);
+}
