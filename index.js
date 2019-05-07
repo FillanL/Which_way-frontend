@@ -12,8 +12,10 @@ const currentPlayer = document.querySelector('#current-player')
 const logOutBtn = document.querySelector('#log-out-btn')
 const startGameBtn = document.querySelector('#game-start-btn')
 
+let active = false
 let loggedInUser;
 let keySequenceArray = []
+let currentScore = 0
 // *****************************************
 // end of delcaration
 // ******************************************
@@ -58,7 +60,40 @@ const renderSequence = function () {
     }
 }
 
+// call hi-score from database
+const getHiScores = () => {
+    fetch('http://localhost:3000/api/v1/games')
+        .then(res => res.json())
+        .then(allGames => {
+            // console.log(allGames)
+
+            // all game objects from database
+            allGames.forEach(game => {
+                // for each player that played create a table row 
+                const playerHiscorreRow = document.createElement('tr')
+                playerHiscorreRow.innerHTML = ``
+                // add inform wihtin that table row
+                scoresBody.innerHTML += `
+               <td> ${game.user.username}</td>
+               <td> ${game.difficulty}</td>
+               <td> ${game.high_score}</td>
+            `
+                // hiScoreTbl.appendChild(playerHiscorreRow)
+            });
+        })
+}
+
+
+//random arrow generator
+const rando = (x) => {
+    for (let index = 0; index < x; index++) {
+        keySequenceArray.push(Math.floor(Math.random() * 4) + 37)
+    }
+}
+
+//shows the key sequence
 const displaySequence = () => {
+    active = false
     renderSequence()
     setTimeout(() => {
         const letterTiles = document.querySelectorAll('.letter-tile')
@@ -70,10 +105,55 @@ const displaySequence = () => {
                     'fa-arrow-alt-circle-up', 'fa-arrow-alt-circle-down', 'far')
 
                 kid.children[0].classList.add('fas', 'fa-question')
+                active = true
             }
         )
-    }, 5000);
+
+    }, 3000);
 }
+
+//user input conditions
+const checkUserInput = () => {
+    // listening for user input
+    let consecIndex = 0
+    document.addEventListener('keydown', e => {
+        if (active === true) {
+            if (e.keyCode === keySequenceArray[0]) {
+                // debugger
+                console.log('correct', e.key.slice(5).toLowerCase())
+
+                gameContainer.children[consecIndex].children[0].classList.remove(`fa-arrow-alt-circle-${e.key.slice(5).toLowerCase()}`, 'far', 'fas', 'fa-question')
+
+                gameContainer.children[consecIndex].children[0].classList.add('fa-check', 'fas', 'green')
+
+                consecIndex++;
+                keySequenceArray.shift()
+
+                // try to have last check mark display
+                // setTimeout(() => {}, 5000)
+                if (keySequenceArray.length === 0) {
+                    currentScore += 100
+                    consecIndex = 0
+                    rando(4)
+                    gameContainer.innerHTML = ''
+                    displaySequence()
+                    console.log(currentScore)
+                }
+            } else {
+                console.log('smh')
+                keySequenceArray = []
+                gameContainer.innerHTML = ''
+                rando(4)
+                displaySequence()
+                consecIndex = 0
+                console.log(currentScore)
+            }
+            // console.log(rando(4), keySequenceArray)
+        }
+    })
+}
+
+// function gameTimer()
 // *****************************************
 // end of delcaration
 // ******************************************
@@ -134,75 +214,17 @@ hiScoreBtn.addEventListener('click', (e) => {
     }
 })
 
-
-// call hi-score from database
-const getHiScores = () => {
-    fetch('http://localhost:3000/api/v1/games')
-        .then(res => res.json())
-        .then(allGames => {
-            // console.log(allGames)
-
-            // all game objects from database
-            allGames.forEach(game => {
-                // for each player that played create a table row 
-                const playerHiscorreRow = document.createElement('tr')
-                playerHiscorreRow.innerHTML = ``
-                // add inform wihtin that table row
-                scoresBody.innerHTML += `
-               <td> ${game.user.username}</td>
-               <td> ${game.difficulty}</td>
-               <td> ${game.high_score}</td>
-            `
-                // hiScoreTbl.appendChild(playerHiscorreRow)
-            });
-        })
-}
-
-const rando = (x) => {
-    for (let index = 0; index < x; index++) {
-        keySequenceArray.push(Math.floor(Math.random() * 4) + 37)
-    }
-}
-rando(4)
-console.log(keySequenceArray)
 //User must be logged in
+
 startGameBtn.addEventListener('click', e => {
+    //starts clock
+
     // have countdown
-    // load sequence
+    startGameBtn.classList.add('hidden')
+    rando(4)
+    console.log(keySequenceArray)
 
+    // load sequence 
     displaySequence()
-    // renderSequence()
-    // listening for user input
-    let consecIndex = 0
-    document.addEventListener('keydown', e => {
-        if (e.keyCode === keySequenceArray[0]) {
-            // debugger
-            console.log('correct', e.key.slice(5).toLowerCase())
-
-            gameContainer.children[consecIndex].children[0].classList.remove(`fa-arrow-alt-circle-${e.key.slice(5).toLowerCase()}`, 'far', 'fas', 'fa-question')
-
-            gameContainer.children[consecIndex].children[0].classList.add('fa-check', 'fas', 'green')
-
-            consecIndex++;
-            keySequenceArray.shift()
-
-            if (keySequenceArray.length === 0) {
-                consecIndex = 0
-                rando(4)
-                gameContainer.innerHTML = ''
-                renderSequence()
-            }
-        } else {
-            console.log('smh')
-            keySequenceArray = []
-            rando(4)
-            gameContainer.innerHTML = ''
-            renderSequence()
-            consecIndex = 0
-        }
-        // console.log(rando(4), keySequenceArray)
-    })
-    // gameContainer.innerHTML
-    // track score
-
+    checkUserInput()
 })
