@@ -1,0 +1,48 @@
+table,
+td,
+th {
+    border: 1.5px solid navy;
+    text-align: center;
+}
+
+td {
+    background-color: white;
+}
+
+table,
+th {
+    padding: 20px;
+    background-color: rgb(228, 158, 72);
+}
+
+.hidden {
+    display: none;
+}
+
+/* takennnnn */
+.letter-tile {
+    width: 3em;
+    height: 3em;
+    margin: 0.25em;
+    background: lightcyan;
+    text-align: center;
+    font-size: 3em;
+    line-height: 3em;
+    text-transform: uppercase;
+    color: rgb(236, 67, 67);
+    font-weight: bold;
+    border-radius: .5em;
+}
+
+#game-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.red {
+    color: rgb(236, 67, 67);
+}
+
+.green {
+    color: #38f014;
+}
