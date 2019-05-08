@@ -26,28 +26,6 @@ let numOfCards = 3
 let correctLine = 0;
 let delaySeconds;
 
-switch (userDifficultySelect.value) {
-    case "Easy":
-        numOfCards = 2
-        delaySeconds = 3000
-        break;
-
-    case "Intermediate":
-        numOfCards = 3
-        delaySeconds = 4000
-        break;
-
-    case "Hard":
-        numOfCards = 4
-        delaySeconds = 5000
-        break;
-
-    default:
-        numOfCards = 2
-        delaySeconds = 3000
-        break;
-
-}
 
 // let t;
 // *****************************************
@@ -55,6 +33,53 @@ switch (userDifficultySelect.value) {
 // ******************************************
 // Start of all declared function that will be called
 // *****************************************
+
+//changes delaySeconds based on user input, and starting cards
+function gameSettings(){
+  switch (userDifficultySelect.value) {
+      case "Easy":
+          numOfCards = 2
+          delaySeconds = 3000
+          break;
+
+      case "Intermediate":
+          numOfCards = 3
+          delaySeconds = 4000
+          break;
+
+      case "Hard":
+          numOfCards = 4
+          delaySeconds = 4000
+          break;
+
+      default:
+          numOfCards = 2
+          delaySeconds = 1000
+          break;
+
+  }
+}
+
+function subtract() {
+    // seconds--;
+    if (seconds > 0) {
+        seconds--;
+        // return
+
+        time.innerHTML = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "0") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+        timer();
+    }
+    if (seconds == 0) {
+        allowKeyPress = false
+        gameActive = false
+        time.innerHTML = ""
+        time.innerText = "Game Over!!"
+    }
+}
+
+function timer() {
+    t = setTimeout(subtract, 1000);
+}
 
 //function to render random sequence
 const renderSequence = function () {
@@ -103,7 +128,7 @@ const getHiScores = () => {
 
             // all game objects from database
             allGames.forEach(game => {
-                // for each player that played create a table row 
+                // for each player that played create a table row
                 const playerHiscorreRow = document.createElement('tr')
                 playerHiscorreRow.innerHTML = ``
                 // add inform wihtin that table row
@@ -202,7 +227,9 @@ const checkUserInput = () => {
 // trying to create username and a game instance at the same time....
 newUserForm.addEventListener('submit', (e) => {
     e.preventDefault()
-    // console.log(userDifficultySelect.value);
+
+    let difficulty = userDifficultySelect.value
+
     fetch('http://localhost:3000/api/v1/games', {
             method: 'POST',
             headers: {
@@ -212,7 +239,7 @@ newUserForm.addEventListener('submit', (e) => {
             body: JSON.stringify({
 
                 username: newUser.value,
-                difficulty: userDifficultySelect.value
+                // difficulty: userDifficultySelect.value
             }),
         })
         .then(res => res.json())
@@ -222,13 +249,13 @@ newUserForm.addEventListener('submit', (e) => {
             loggedInUser = player.username
             newUserForm.classList.add('hidden');
 
-            debugger
             currentPlayer.innerHTML = `
             <p> current player is ${loggedInUser}</p>
 
-            <h3>${player.difficulty} MODE</h3>
+            <h3>${difficulty} MODE</h3>
             `
         })
+    gameSettings()
     newUserForm.reset()
     logOutBtn.classList.remove("hidden")
 })
@@ -269,41 +296,8 @@ startGameBtn.addEventListener('click', e => {
     rando(numOfCards)
     console.log(keySequenceArray)
 
-    // load sequence 
+    // load sequence
     displaySequence()
     checkUserInput()
     timer()
 })
-
-
-
-// 
-
-// let x = document.getElementsByTagName('h1')[0]
-// // start = document.getElementById('game-start-btn'),
-
-// let seconds = 10
-// let minutes = 0;
-// let t;
-
-function subtract() {
-    // seconds--;
-    if (seconds > 0) {
-        seconds--;
-        console.log(seconds)
-        // return
-
-        time.innerHTML = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "0") + ":" + (seconds > 9 ? seconds : "0" + seconds);
-        timer();
-    }
-    if (seconds == 0) {
-        allowKeyPress = false
-        gameActive = false
-        time.innerHTML = ""
-        time.innerText = "Game Over!!"
-    }
-}
-
-function timer() {
-    t = setTimeout(subtract, 1000);
-}
