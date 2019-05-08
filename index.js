@@ -245,7 +245,7 @@ const checkUserInput = () => {
                 rando(numOfCards)
                 gameContainer.innerHTML = ''
                 displaySequence()
-                console.log(currentScore, keySequenceArray)
+
             }
         }
     })
@@ -321,11 +321,28 @@ hiScoreBtn.addEventListener('click', (e) => {
 //User must be logged in
 
 startGameBtn.addEventListener('click', e => {
+
     startGame()
+
+    //starts clock
+    // have countdown
+
+    // gameActive = true;
+    seconds = 12
+    gameScore.classList.remove('hidden')
+    time.classList.remove('hidden')
+    startGameBtn.classList.add('hidden')
+    rando(numOfCards)
+    console.log(keySequenceArray)
+
+    // load sequence
+    displaySequence()
+
     checkUserInput()
     // startGame()
     restartGameBtn.classList.remove("hidden")
 })
+
 
 restartGameBtn.addEventListener('click', e =>{
     consecIndex = 0
@@ -338,3 +355,4 @@ restartGameBtn.addEventListener('click', e =>{
     startGame()
 
 })
+
