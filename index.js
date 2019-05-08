@@ -18,13 +18,16 @@ let allowKeyPress = false;
 let loggedInUser;
 let keySequenceArray = [];
 let currentScore = 0
+let usersDifficulty;
 
+let currentPlayerId;
 let time = document.getElementById('time')
-let seconds = 30;
+let seconds
 let minutes = 0;
 let numOfCards = 3
 let correctLine = 0;
 let delaySeconds;
+
 
 
 // let t;
@@ -34,17 +37,19 @@ let delaySeconds;
 // Start of all declared function that will be called
 // *****************************************
 
-let testcall = ()=>{
-  fetch('http://localhost:3000/api/v1/game#newgame',{
-    method:  'POST',
-    header:{
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    body: JSON.stringify({
-      difficulty: userDifficultySelect.value
+let postGameScore = () => {
+    fetch('http://localhost:3000/api/v1/newgame', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            difficulty: difficulty,
+            user_id: currentPlayerId,
+            score: currentScore
+        })
     })
-  })
 }
 
 //changes delaySeconds based on user input, and starting cards
@@ -52,17 +57,17 @@ function gameSettings(){
   switch (userDifficultySelect.value) {
       case "Easy":
           numOfCards = 2
-          delaySeconds = 3000
+          delaySeconds = 2000
           break;
 
       case "Intermediate":
           numOfCards = 3
-          delaySeconds = 4000
+          delaySeconds = 2000
           break;
 
       case "Hard":
           numOfCards = 4
-          delaySeconds = 4000
+          delaySeconds = 2000
           break;
 
       default:
@@ -82,12 +87,12 @@ function subtract() {
         time.innerHTML = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "0") + ":" + (seconds > 9 ? seconds : "0" + seconds);
         timer();
     }
-    if (seconds == 0) {
+    else if (seconds === 0) {
         allowKeyPress = false
         gameActive = false
         time.innerHTML = ""
         time.innerText = "Game Over!!"
-        testcall();
+        postGameScore();
     }
 }
 
@@ -168,7 +173,7 @@ const rando = (x) => {
 const displaySequence = () => {
     allowKeyPress = false
     renderSequence()
-    if (seconds > 3)
+    if (seconds > (delaySeconds/1000))
         setTimeout(() => {
             const letterTiles = document.querySelectorAll('.letter-tile')
             // debugger
@@ -212,9 +217,8 @@ const checkUserInput = () => {
                     rando(numOfCards)
                     gameContainer.innerHTML = ''
                     displaySequence()
-                    console.log(currentScore)
-                    correctLine += 1
-                    if (correctLine == 2) {
+                    ++correctLine
+                    if ((correctLine%4) === 0) {
                         ++numOfCards
                     }
 
@@ -222,13 +226,12 @@ const checkUserInput = () => {
             } else {
                 console.log('smh')
                 keySequenceArray = []
-                gameContainer.innerHTML = ''
-                rando(numOfCards)
-                displaySequence()
                 consecIndex = 0
+                rando(numOfCards)
+                gameContainer.innerHTML = ''
+                displaySequence()
                 console.log(currentScore)
             }
-            // console.log(rando(4), keySequenceArray)
         }
     })
 }
@@ -242,7 +245,7 @@ const checkUserInput = () => {
 newUserForm.addEventListener('submit', (e) => {
     e.preventDefault()
 
-    let difficulty = userDifficultySelect.value
+    difficulty = userDifficultySelect.value
 
     fetch('http://localhost:3000/api/v1/games', {
             method: 'POST',
@@ -268,10 +271,12 @@ newUserForm.addEventListener('submit', (e) => {
 
             <h3>${difficulty} MODE</h3>
             `
+            currentPlayerId = player.id
         })
     gameSettings()
     newUserForm.reset()
     logOutBtn.classList.remove("hidden")
+    startGameBtn.classList.remove("hidden")
 })
 
 // refactor for post request to db
@@ -284,6 +289,7 @@ logOutBtn.addEventListener('click', (e) => {
     loggedInUser = "";
     currentPlayer.innerHTML = ""
     logOutBtn.classList.add("hidden")
+    startGameBtn.classList.add("hidden")
 })
 
 // toggle hiscore menu when hiscore btn is clicked
@@ -304,6 +310,7 @@ startGameBtn.addEventListener('click', e => {
     // have countdown
 
     // gameActive = true;
+    seconds = 12
     gameScore.classList.remove('hidden')
     time.classList.remove('hidden')
     startGameBtn.classList.add('hidden')
