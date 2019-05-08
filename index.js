@@ -34,6 +34,19 @@ let delaySeconds;
 // Start of all declared function that will be called
 // *****************************************
 
+let testcall = ()=>{
+  fetch('http://localhost:3000/api/v1/game#newgame',{
+    method:  'POST',
+    header:{
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+      difficulty: userDifficultySelect.value
+    })
+  })
+}
+
 //changes delaySeconds based on user input, and starting cards
 function gameSettings(){
   switch (userDifficultySelect.value) {
@@ -74,6 +87,7 @@ function subtract() {
         gameActive = false
         time.innerHTML = ""
         time.innerText = "Game Over!!"
+        testcall();
     }
 }
 
