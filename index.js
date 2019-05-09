@@ -29,7 +29,7 @@ let minutes = 0;
 let numOfCards
 let correctLines = 0;
 let delaySeconds;
-let consecIndex
+let consecIndex = 0
 
 // let t;
 // *****************************************
@@ -168,7 +168,7 @@ const reverseArrow = function () {
 
 
 const startGame = () =>{
-  seconds = 60
+  seconds = 30
   gameScore.classList.remove('hidden')
   time.classList.remove('hidden')
   startGameBtn.classList.add('hidden')
@@ -241,18 +241,17 @@ const displaySequence = () => {
 }
 
 //user input conditions
-const checkUserInput = () => {
     // listening for user input
-    consecIndex = 0
     document.addEventListener('keydown', e => {
         if (allowKeyPress === true) {
             if (e.keyCode === keySequenceArray[0]) {
+
                 console.log('correct', e.key.slice(5).toLowerCase())
 
                 gameContainer.children[consecIndex].children[0].classList.remove(`fa-arrow-alt-circle-${e.key.slice(5).toLowerCase()}`, 'far', 'fas', 'fa-question')
 
                 gameContainer.children[consecIndex].children[0].classList.add('fa-check', 'fas', 'green')
-                ++consecIndex;
+                consecIndex++;
                 keySequenceArray.shift()
                 // try to have last check mark display
                 if (keySequenceArray.length === 0 && seconds !== 0) {
@@ -280,11 +279,9 @@ const checkUserInput = () => {
                 rando(numOfCards)
                 gameContainer.innerHTML = ''
                 displaySequence()
-
               }
         }
     })
-}
 
 // function gameTimer()
 // *****************************************
@@ -335,10 +332,15 @@ logOutBtn.addEventListener('click', (e) => {
     newUserForm.classList.remove('hidden');
     loggedInUser = "";
     currentPlayer.innerHTML = ""
+    gameContainer.innerHTML = ""
     logOutBtn.classList.add("hidden")
     startGameBtn.classList.add("hidden")
     myStatsBtn.classList.add("hidden")
     restartGameBtn.classList.add("hidden")
+    gameScore.classList.add("hidden")
+    time.innerHTML = ''
+    time.classList.add("hidden")
+
   }
 })
 
@@ -369,13 +371,19 @@ myStatsBtn.addEventListener('click', e => {
 
 startGameBtn.addEventListener('click', e => {
   gameActive = true
+    keySequenceArray = []
+    correctLines = 0
+    currentScore = 0
+    gameScore.innerText = 0
+    gameContainer.innerHTML = ""
     startGame()
     timer()
-    checkUserInput()
+    // checkUserInput()
     restartGameBtn.classList.remove("hidden")
 })
 
 restartGameBtn.addEventListener('click', e =>{
+  clearTimeout(t)
   gameActive = true
     consecIndex = 0
     correctLines = 0
