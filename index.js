@@ -27,7 +27,7 @@ let time = document.getElementById('time')
 let seconds
 let minutes = 0;
 let numOfCards
-let correctLine = 0;
+let correctLines = 0;
 let delaySeconds;
 let consecIndex
 
@@ -53,9 +53,9 @@ let postGameScore = () => {
     })
 }
 
-//changes delaySeconds based on user input, and starting cards
+//changes delaySeconds and starting cards based on user input
 function gameSettings(){
-  switch (userDifficultySelect.value) {
+  switch (difficulty) {
       case "Easy":
           numOfCards = 2
           delaySeconds = 2000
@@ -68,7 +68,7 @@ function gameSettings(){
 
       case "Hard":
           numOfCards = 4
-          delaySeconds = 2000
+          delaySeconds = 2500
           break;
 
       default:
@@ -103,8 +103,6 @@ function timer() {
 
 //function to render random sequence
 const renderSequence = function () {
-    // keySequenceArray.forEach(num => {
-
     for (p = 0; p < keySequenceArray.length; p++) {
         let arrow;
         switch (keySequenceArray[p]) {
@@ -139,8 +137,38 @@ const renderSequence = function () {
     }
 }
 
+//Function for reversing one arrow in the keySequenceArray
+const reverseArrow = function () {
+        let arrow;
+        let randomNumber = Math.floor(Math.random() * numOfCards)
+        switch (keySequenceArray[randomNumber]) {
+            case 37:
+                arrow = "fa-arrow-alt-circle-right"
+                break;
+            case 38:
+                arrow = "fa-arrow-alt-circle-down"
+                break;
+
+            case 39:
+                arrow = "fa-arrow-alt-circle-left"
+                break;
+
+            case 40:
+                arrow = "fa-arrow-alt-circle-up"
+                break;
+
+            default:
+                break;
+        }
+        gameContainer.children[randomNumber].children[0].classList.remove('fa-arrow-alt-circle-left',
+        'fa-arrow-alt-circle-right',
+        'fa-arrow-alt-circle-up', 'fa-arrow-alt-circle-down', 'red')
+        gameContainer.children[randomNumber].children[0].classList.add(`${arrow}`, 'green')
+}
+
+
 const startGame = () =>{
-  seconds = 12
+  seconds = 60
   gameScore.classList.remove('hidden')
   time.classList.remove('hidden')
   startGameBtn.classList.add('hidden')
@@ -149,7 +177,6 @@ const startGame = () =>{
   // load sequence
   displaySequence()
   // checkUserInput()
-  timer()
 }
 
 // call hi-score from database
@@ -187,6 +214,14 @@ const rando = (x) => {
 const displaySequence = () => {
     allowKeyPress = false
     renderSequence()
+    switch (difficulty) {
+      case "Hard":
+      reverseArrow()
+      break;
+
+      default:
+      break;
+    }
     if (seconds > (delaySeconds/1000))
         setTimeout(() => {
             const letterTiles = document.querySelectorAll('.letter-tile')
@@ -195,9 +230,9 @@ const displaySequence = () => {
                 kid => {
 
                     kid.children[0].classList.remove('fa-arrow-alt-circle-left', 'fa-arrow-alt-circle-right',
-                        'fa-arrow-alt-circle-up', 'fa-arrow-alt-circle-down', 'far')
+                        'fa-arrow-alt-circle-up', 'fa-arrow-alt-circle-down', 'far', 'green')
 
-                    kid.children[0].classList.add('fas', 'fa-question')
+                    kid.children[0].classList.add('fas', 'fa-question', 'red')
                     allowKeyPress = true
                 }
             )
@@ -217,25 +252,26 @@ const checkUserInput = () => {
                 gameContainer.children[consecIndex].children[0].classList.remove(`fa-arrow-alt-circle-${e.key.slice(5).toLowerCase()}`, 'far', 'fas', 'fa-question')
 
                 gameContainer.children[consecIndex].children[0].classList.add('fa-check', 'fas', 'green')
-                console.log("wtf")
                 ++consecIndex;
                 keySequenceArray.shift()
                 // try to have last check mark display
-                // setTimeout(() => {}, 5000)
                 if (keySequenceArray.length === 0 && seconds !== 0) {
+                  allowKeyPress = false
+                  setTimeout(() => {
+                    allowKeyPress = true
                     currentScore += 100
                     gameScore.innerText = currentScore
                     consecIndex = 0
                     rando(numOfCards)
                     gameContainer.innerHTML = ''
                     displaySequence()
-                    ++correctLine
-                    if ((correctLine%4) === 0) {
+                    ++correctLines
+                    if ((correctLines%4) === 0) {
                         ++numOfCards
                     }
-
+                  }, 500)
                 }
-            } else {
+            }   else {
                 console.log('smh first',keySequenceArray[0])
                 console.log('my keyyyyy', e.keyCode)
                 console.log("whole thing",keySequenceArray)
@@ -245,7 +281,7 @@ const checkUserInput = () => {
                 gameContainer.innerHTML = ''
                 displaySequence()
 
-            }
+              }
         }
     })
 }
@@ -258,9 +294,7 @@ const checkUserInput = () => {
 // trying to create username and a game instance at the same time....
 newUserForm.addEventListener('submit', (e) => {
     e.preventDefault()
-
     difficulty = userDifficultySelect.value
-
     fetch('http://localhost:3000/api/v1/games', {
             method: 'POST',
             headers: {
@@ -270,19 +304,16 @@ newUserForm.addEventListener('submit', (e) => {
             body: JSON.stringify({
 
                 username: newUser.value.toUpperCase(),
-                // difficulty: userDifficultySelect.value
             }),
         })
         .then(res => res.json())
         .then(player => {
-            // console.log(player)
 
             loggedInUser = player.username
             newUserForm.classList.add('hidden');
-
-            currentPlayer.innerHTML = `
+            currentPlayer.innerHTML =
+            `
             <p> current player is ${loggedInUser}</p>
-
             <h3>${difficulty} MODE</h3>
             `
             currentPlayerId = player.id
@@ -298,14 +329,17 @@ newUserForm.addEventListener('submit', (e) => {
 // const addUser = () =>{
 // }
 
-// logout and clear current user
+// logout, clears current user and hides logged in buttons
 logOutBtn.addEventListener('click', (e) => {
+    if (gameActive === false){
     newUserForm.classList.remove('hidden');
     loggedInUser = "";
     currentPlayer.innerHTML = ""
     logOutBtn.classList.add("hidden")
     startGameBtn.classList.add("hidden")
     myStatsBtn.classList.add("hidden")
+    restartGameBtn.classList.add("hidden")
+  }
 })
 
 // toggle hiscore menu when hiscore btn is clicked
@@ -318,52 +352,38 @@ hiScoreBtn.addEventListener('click', (e) => {
         getHiScores()
     }
 })
-
-//User must be logged in
-
-startGameBtn.addEventListener('click', e => {
-    startGame()
-    checkUserInput()
-    // startGame()
-    restartGameBtn.classList.remove("hidden")
-})
-
-restartGameBtn.addEventListener('click', e =>{
-    consecIndex = 0
-    correctLine = 0
-    currentScore = 0
-    gameContainer.innerHTML = ""
-    keySequenceArray = []
-    gameScore.innerText = 0
-    gameSettings()
-    startGame()
-})
-
+// toggles stats of current user
 myStatsBtn.addEventListener('click', e => {
     fetch('http://localhost:3000/api/v1/games')
         .then(res => res.json())
         .then(stats => {
             let counteee = 0;
-
             stats.forEach(stat => {
                 if (stat.user.username === loggedInUser) {
                     counteee++
                 }
-
             })
             console.log(counteee)
         })
 })
 
+startGameBtn.addEventListener('click', e => {
+  gameActive = true
+    startGame()
+    timer()
+    checkUserInput()
+    restartGameBtn.classList.remove("hidden")
+})
 
 restartGameBtn.addEventListener('click', e =>{
+  gameActive = true
     consecIndex = 0
-    correctLine = 0
+    correctLines = 0
     currentScore = 0
     gameContainer.innerHTML = ""
     keySequenceArray = []
     gameScore.innerText = 0
     gameSettings()
     startGame()
-
+    timer()
 })
