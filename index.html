@@ -19,11 +19,13 @@
 
     <button id="hi-score-btn"> HiScores
     </button>
+    <button id="my-stats-btn" class="hidden"> My Stats
+    </button>
 
     <button id="log-out-btn" class="hidden"> Logout </button>
 
     <form id="create-username">
-        <input id="user" type="text" placeholder="select an user name">
+        <input id="user" type="text" placeholder="Type in user name" required maxlength="7" minlength="1">
         <select name="" id="user-diffculty">
             <option value="Easy">Easy</option>
             <option value="Intermediate">Intermediate</option>
@@ -55,6 +57,9 @@
     </div>
 
     <button id="game-start-btn" class="hidden">Start Game
+    </button>
+
+    <button id="game-restart-btn" class="hidden"> Restart Game
     </button>
 
     <script src="index.js"></script>

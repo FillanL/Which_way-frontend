@@ -13,6 +13,7 @@ const logOutBtn = document.querySelector('#log-out-btn')
 const startGameBtn = document.querySelector('#game-start-btn')
 const gameScore = document.querySelector('#game-score')
 const restartGameBtn = document.querySelector('#game-restart-btn')
+const myStatsBtn = document.querySelector('#my-stats-btn')
 
 let gameActive = false;
 let allowKeyPress = false;
@@ -29,8 +30,6 @@ let numOfCards
 let correctLine = 0;
 let delaySeconds;
 let consecIndex
-
-
 
 // let t;
 // *****************************************
@@ -270,7 +269,7 @@ newUserForm.addEventListener('submit', (e) => {
             },
             body: JSON.stringify({
 
-                username: newUser.value,
+                username: newUser.value.toUpperCase(),
                 // difficulty: userDifficultySelect.value
             }),
         })
@@ -292,6 +291,7 @@ newUserForm.addEventListener('submit', (e) => {
     newUserForm.reset()
     logOutBtn.classList.remove("hidden")
     startGameBtn.classList.remove("hidden")
+    myStatsBtn.classList.remove("hidden")
 })
 
 // refactor for post request to db
@@ -305,6 +305,7 @@ logOutBtn.addEventListener('click', (e) => {
     currentPlayer.innerHTML = ""
     logOutBtn.classList.add("hidden")
     startGameBtn.classList.add("hidden")
+    myStatsBtn.classList.add("hidden")
 })
 
 // toggle hiscore menu when hiscore btn is clicked
@@ -321,26 +322,37 @@ hiScoreBtn.addEventListener('click', (e) => {
 //User must be logged in
 
 startGameBtn.addEventListener('click', e => {
-
     startGame()
-
-    //starts clock
-    // have countdown
-
-    // gameActive = true;
-    seconds = 12
-    gameScore.classList.remove('hidden')
-    time.classList.remove('hidden')
-    startGameBtn.classList.add('hidden')
-    rando(numOfCards)
-    console.log(keySequenceArray)
-
-    // load sequence
-    displaySequence()
-
     checkUserInput()
     // startGame()
     restartGameBtn.classList.remove("hidden")
+})
+
+restartGameBtn.addEventListener('click', e =>{
+    consecIndex = 0
+    correctLine = 0
+    currentScore = 0
+    gameContainer.innerHTML = ""
+    keySequenceArray = []
+    gameScore.innerText = 0
+    gameSettings()
+    startGame()
+})
+
+myStatsBtn.addEventListener('click', e => {
+    fetch('http://localhost:3000/api/v1/games')
+        .then(res => res.json())
+        .then(stats => {
+            let counteee = 0;
+
+            stats.forEach(stat => {
+                if (stat.user.username === loggedInUser) {
+                    counteee++
+                }
+
+            })
+            console.log(counteee)
+        })
 })
 
 
