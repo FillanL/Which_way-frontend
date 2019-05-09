@@ -244,7 +244,7 @@ const checkUserInput = () => {
                 rando(numOfCards)
                 gameContainer.innerHTML = ''
                 displaySequence()
-                console.log(currentScore, keySequenceArray)
+
             }
         }
     })
@@ -354,3 +354,17 @@ myStatsBtn.addEventListener('click', e => {
             console.log(counteee)
         })
 })
+
+
+restartGameBtn.addEventListener('click', e =>{
+    consecIndex = 0
+    correctLine = 0
+    currentScore = 0
+    gameContainer.innerHTML = ""
+    keySequenceArray = []
+    gameScore.innerText = 0
+    gameSettings()
+    startGame()
+
+})
+
