@@ -184,10 +184,22 @@ const getHiScores = () => {
     fetch('http://localhost:3000/api/v1/games')
         .then(res => res.json())
         .then(allGames => {
-            // console.log(allGames)
+            //sort highscores
+            allGames.sort(compare)
+            function compare(a, b) {
+                const scoreA = a.high_score;
+                const scoreB = b.high_score
 
+                let comparison = 0;
+                if (scoreA < scoreB) {
+                  comparison = 1;
+                } else if (scoreA > scoreB) {
+                  comparison = -1;
+                }
+                return comparison;
+              }
             // all game objects from database
-            allGames.forEach(game => {
+            allGames.slice(0,20).forEach(game => {
                 // for each player that played create a table row
                 const playerHiscorreRow = document.createElement('tr')
                 playerHiscorreRow.innerHTML = ``
@@ -263,11 +275,15 @@ const displaySequence = () => {
                     consecIndex = 0
                     rando(numOfCards)
                     gameContainer.innerHTML = ''
-                    displaySequence()
                     ++correctLines
-                    if ((correctLines%4) === 0) {
-                        ++numOfCards
+
+                    if (correctLines%4 === 0) {
+                        console.log("before:", numOfCards)
+                        numOfCards += 1
+                        console.log("4 %",numOfCards, correctLines)
+
                     }
+                    displaySequence()
                   }, 500)
                 }
             }   else {
