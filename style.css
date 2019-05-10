@@ -64,7 +64,6 @@ form button {
     align-content: center;
     font-size: 16px;
     /* background-color: #ED6A5A; */
-
     margin-left: 40%;
 }
 
@@ -97,6 +96,9 @@ form button {
     margin: 20% auto;
     border-radius: 10px;
     background-color: #FFE66D;
+    -webkit-box-shadow: 10px 9px 11px 2px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 10px 9px 11px 2px rgba(0, 0, 0, 0.15);
+    box-shadow: 10px 9px 11px 2px rgba(0, 0, 0, 0.15);
     /* background-color: #C6DEA6; */
 }
 
@@ -116,6 +118,9 @@ form button {
     height: 450px;
     width: 100%;
     border-radius: 10px;
+    -webkit-box-shadow: 10px 9px 11px 2px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 10px 9px 11px 2px rgba(0, 0, 0, 0.15);
+    box-shadow: 10px 9px 11px 2px rgba(0, 0, 0, 0.15);
 }
 
 .time-score {
@@ -153,7 +158,6 @@ th {
     display: none;
 }
 
-/* takennnnn */
 .letter-tile {
     width: 3em;
     height: 3em;
@@ -198,4 +202,15 @@ th {
     align-content: center;
     background-color: #FDFFFC;
     /* background-color: rgb(186, 232, 247); */
+}
+
+#game-restart-btn,
+#game-start-btn {
+    margin-top: 20px;
+    height: 35px;
+    width: 120px;
+    border: black 1px solid;
+    align-content: center;
+    font-size: 16px;
+    background-color: #FFE66D;
 }
