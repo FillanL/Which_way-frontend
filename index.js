@@ -13,7 +13,9 @@ const logOutBtn = document.querySelector('#log-out-btn')
 const startGameBtn = document.querySelector('#game-start-btn')
 const gameScore = document.querySelector('#game-score')
 const restartGameBtn = document.querySelector('#game-restart-btn')
-const myStatsBtn = document.querySelector('#my-stats-btn')
+const playInfo = document.querySelector('#how-to-play')
+const playArt = document.querySelector('#how-to-article')
+// const myStatsBtn = document.querySelector('#my-stats-btn')
 
 let gameActive = false;
 let allowKeyPress = false;
@@ -59,22 +61,22 @@ function gameSettings(){
   switch (difficulty) {
       case "Easy":
           numOfCards = 2
-          delaySeconds = 2000
+          delaySeconds = 3000
           break;
 
       case "Intermediate":
-          numOfCards = 3
+          numOfCards = 2
           delaySeconds = 2000
           break;
 
       case "Hard":
-          numOfCards = 4
-          delaySeconds = 2500
+          numOfCards = 3
+          delaySeconds = 2000
           break;
 
       default:
           numOfCards = 2
-          delaySeconds = 1000
+          delaySeconds = 2000
           break;
 
   }
@@ -169,7 +171,7 @@ const reverseArrow = function () {
 
 
 const startGame = () =>{
-  seconds = 30
+  seconds = 60
   gameScore.classList.remove('hidden')
   time.classList.remove('hidden')
   startGameBtn.classList.add('hidden')
@@ -201,7 +203,7 @@ const getHiScores = () => {
                 return comparison;
               }
             // all game objects from database
-            allGames.slice(0,20).forEach(game => {
+            allGames.slice(0,15).forEach(game => {
                 // for each player that played create a table row
                 const playerHiscorreRow = document.createElement('tr')
                 playerHiscorreRow.innerHTML = ``
@@ -345,7 +347,7 @@ newUserForm.addEventListener('submit', (e) => {
     newUserForm.reset()
     logOutBtn.classList.remove("hidden")
     startGameBtn.classList.remove("hidden")
-    myStatsBtn.classList.remove("hidden")
+    // myStatsBtn.classList.remove("hidden")
 })
 
 // refactor for post request to db
@@ -361,7 +363,7 @@ logOutBtn.addEventListener('click', (e) => {
     gameContainer.innerHTML = ""
     logOutBtn.classList.add("hidden")
     startGameBtn.classList.add("hidden")
-    myStatsBtn.classList.add("hidden")
+    // myStatsBtn.classList.add("hidden")
     restartGameBtn.classList.add("hidden")
     gameScore.classList.add("hidden")
     time.innerHTML = ''
@@ -383,19 +385,20 @@ hiScoreBtn.addEventListener('click', (e) => {
 
 // toggles stats of current user
 
-myStatsBtn.addEventListener('click', e => {
-    fetch('http://localhost:3000/api/v1/games')
-        .then(res => res.json())
-        .then(stats => {
-            let counteee = 0;
-            stats.forEach(stat => {
-                if (stat.user.username === loggedInUser) {
-                    counteee++
-                }
-            })
-            console.log(counteee)
-        })
-})
+// myStatsBtn.addEventListener('click', e => {
+//     fetch('http://localhost:3000/api/v1/games')
+//         .then(res => res.json())
+//         .then(stats => {
+//             let counteee = 0;
+//             stats.forEach(stat => {
+//                 if (stat.user.username === loggedInUser) {
+//                     counteee++
+//                 }
+//             })
+//             console.log(counteee)
+//         })
+// })
+
 
 startGameBtn.addEventListener('click', e => {
   gameActive = true
@@ -424,4 +427,10 @@ restartGameBtn.addEventListener('click', e =>{
     startGame()
     timer()
 })
+
+playInfo.addEventListener('click', e => {
+
+    playArt.classList.value.includes('hidden') ?
+        playArt.classList.remove('hidden') :
+        playArt.classList.add('hidden');
 

@@ -123,8 +123,12 @@ form button {
     box-shadow: 10px 9px 11px 2px rgba(0, 0, 0, 0.15);
 }
 
+
+
 .time-score {
     display: flex;
+    justify-content: space-between;
+
 }
 
 .current-player {
@@ -213,4 +217,16 @@ th {
     align-content: center;
     font-size: 16px;
     background-color: #FFE66D;
+
 }
+
+#creators{
+  margin-bottom: 0px;
+  position: fixed;
+  bottom: 0;
+  padding-bottom: 20px;
+  color: #040926;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+

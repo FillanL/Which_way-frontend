@@ -17,10 +17,12 @@
 
         <div class="box1">
             <div class="logo">
-                ARROW ==>[]
+
+                Which Way ?
             </div>
             <ul>
-                <li><button>How to play</button></li>
+                <li><button id="how-to-play">How to play</button></li>
+
                 <li><button id="hi-score-btn">HiScores</button></li>
                 <li><button id="my-stats-btn" class="hidden">My Stats</button></li>
                 <li><button id="log-out-btn" class="hidden">Logout</button></li>
@@ -44,11 +46,25 @@
                     </tr>
                 </tbody>
             </table>
+            <div id="how-to-article" class="hidden">
+                <article>
+                    - First you enter a username to play this game and select difficulty.
+                    - After starting the game, you will be flashed a set of arrows keys.
+                    - You will have a few seconds to remember them, and then they will flip to “?” marks.
+                    - Now you can type the arrow keys in the same sequence that was shown.
+                    - If correct, your score will increase. Otherwise it means you “pressed the wrong key” .
+                    - The amount of arrow keys will increase along with your score.
+                    - You may restart by pressing the restart button but you cannot logout unless the game clock has
+                    ended.
+                    - ** HARD MODE ** When shown a green arrow, you must type in the opposite arrow for that position.
+                    - Have fun and enjoy our first ever created game!
+                </article>
+            </div>
+            <div id="creators">Created by Fillan Lee & Tommy Lau</div>
         </div>
 
         <div class="box2">
             <div class="time-score">
-
                 <h2 id="game-score" class="hidden">0</h2>
                 <div id="current-player">
                 </div>
@@ -79,7 +95,6 @@
             </button>
         </div>
     </div>
-
 
     <script src="index.js"></script>
 </body>
