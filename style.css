@@ -1,8 +1,142 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+body {
+    position: relative;
+    padding: 10px 0;
+    width: 95vw;
+    height: 90vh;
+    background-color: #FDFFFC;
+}
+
+
+ul li {
+    text-decoration: none;
+    list-style: none;
+    border-bottom: black 1px solid;
+}
+
+
+ul li button {
+    height: 20px;
+    width: 100px;
+    font-size: 1em;
+    border: none;
+    background: none;
+    color: #FDFFFC;
+}
+
+/*  form stuff */
+form h2 {
+    margin-top: 5%;
+    margin-left: 30%;
+    /* align-self: center; */
+}
+
+form h2:first-of-type {
+    margin-left: 36%;
+}
+
+#user-diffculty {
+    font-size: 1em;
+    background-color: #FDFFFC;
+    margin-left: 30%;
+
+}
+
+.logo {
+    width: 100%;
+    height: 80px;
+    background-color: #011627;
+    color: white;
+    border-radius: 10px;
+    margin: 15px 0px;
+}
+
+form button {
+    display: block;
+    margin-top: 20px;
+    height: 30px;
+    width: 60px;
+    border: black 1px solid;
+    align-content: center;
+    font-size: 16px;
+    /* background-color: #ED6A5A; */
+
+    margin-left: 40%;
+}
+
+#user {
+    border-radius: 5px;
+    width: 200px;
+    padding-left: 9px;
+    font-size: 1em;
+    height: 25px;
+    margin: 15% 15% 20px 15%;
+    background-color: #FDFFFC;
+}
+
+.main {
+    position: fixed;
+    /* padding: 0px 10px; */
+    display: grid;
+    grid-template-columns: .7fr 2fr;
+    grid-gap: 10px;
+    width: 100vw;
+    height: 99vh;
+    overflow: hidden;
+}
+
+#create-username {
+    /* background-color: aquamarine; */
+    padding: 20px;
+    height: 300px;
+    width: 300px;
+    margin: 20% auto;
+    border-radius: 10px;
+    background-color: #FFE66D;
+    /* background-color: #C6DEA6; */
+}
+
+#game-container {
+    /* background-color: beige;
+    margin-top: 5%;
+    width: 100%; */
+
+}
+
+.cover {
+    /* background-color: #B2DBBF;
+     */
+    /* background-color: #C6DEA6; */
+    background-color: #E6EBE0;
+    margin-top: 5%;
+    height: 450px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.time-score {
+    display: flex;
+}
+
+.current-player {
+    display: flex;
+}
+
+/*  */
 table,
 td,
 th {
     border: 1.5px solid navy;
     text-align: center;
+    /* color: black; */
+}
+
+table tbody tr td {
+    color: black;
 }
 
 td {
@@ -24,12 +158,13 @@ th {
     width: 3em;
     height: 3em;
     margin: 0.25em;
-    background: lightcyan;
+    background: #FFE66D;
     text-align: center;
     font-size: 3em;
     line-height: 3em;
     text-transform: uppercase;
-    color: rgb(236, 67, 67);
+    color: #FF6B6B;
+    /* color: rgb(236, 67, 67); */
     font-weight: bold;
     border-radius: .5em;
 }
@@ -45,4 +180,22 @@ th {
 
 .green {
     color: #38f014;
+}
+
+.box1 {
+    padding: 10px;
+    grid-template-areas: 1;
+    color: #F7FFF7;
+    background-color: #7EBDC3;
+    /* background-color: #70C1B3; */
+
+}
+
+.box2 {
+    padding: 10px;
+    grid-template-areas: 1;
+    align-items: center;
+    align-content: center;
+    background-color: #FDFFFC;
+    /* background-color: rgb(186, 232, 247); */
 }

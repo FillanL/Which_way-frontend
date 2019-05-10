@@ -54,29 +54,29 @@ let postGameScore = () => {
 }
 
 //changes delaySeconds based on user input, and starting cards
-function gameSettings(){
-  switch (userDifficultySelect.value) {
-      case "Easy":
-          numOfCards = 2
-          delaySeconds = 2000
-          break;
+function gameSettings() {
+    switch (userDifficultySelect.value) {
+        case "Easy":
+            numOfCards = 2
+            delaySeconds = 2000
+            break;
 
-      case "Intermediate":
-          numOfCards = 3
-          delaySeconds = 2000
-          break;
+        case "Intermediate":
+            numOfCards = 3
+            delaySeconds = 2000
+            break;
 
-      case "Hard":
-          numOfCards = 4
-          delaySeconds = 2000
-          break;
+        case "Hard":
+            numOfCards = 4
+            delaySeconds = 2000
+            break;
 
-      default:
-          numOfCards = 2
-          delaySeconds = 1000
-          break;
+        default:
+            numOfCards = 2
+            delaySeconds = 1000
+            break;
 
-  }
+    }
 }
 
 function subtract() {
@@ -87,8 +87,7 @@ function subtract() {
 
         time.innerHTML = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "0") + ":" + (seconds > 9 ? seconds : "0" + seconds);
         timer();
-    }
-    else if (seconds === 0) {
+    } else if (seconds === 0) {
         allowKeyPress = false
         gameActive = false
         time.innerHTML = ""
@@ -139,17 +138,17 @@ const renderSequence = function () {
     }
 }
 
-const startGame = () =>{
-  seconds = 12
-  gameScore.classList.remove('hidden')
-  time.classList.remove('hidden')
-  startGameBtn.classList.add('hidden')
-  rando(numOfCards)
-  console.log(keySequenceArray)
-  // load sequence
-  displaySequence()
-  // checkUserInput()
-  timer()
+const startGame = () => {
+    seconds = 12
+    gameScore.classList.remove('hidden')
+    time.classList.remove('hidden')
+    startGameBtn.classList.add('hidden')
+    rando(numOfCards)
+    console.log(keySequenceArray)
+    // load sequence
+    displaySequence()
+    // checkUserInput()
+    timer()
 }
 
 // call hi-score from database
@@ -187,7 +186,7 @@ const rando = (x) => {
 const displaySequence = () => {
     allowKeyPress = false
     renderSequence()
-    if (seconds > (delaySeconds/1000))
+    if (seconds > (delaySeconds / 1000))
         setTimeout(() => {
             const letterTiles = document.querySelectorAll('.letter-tile')
             // debugge
@@ -218,7 +217,7 @@ const checkUserInput = () => {
 
                 gameContainer.children[consecIndex].children[0].classList.add('fa-check', 'fas', 'green')
                 console.log("wtf")
-                ++consecIndex;
+                    ++consecIndex;
                 keySequenceArray.shift()
                 // try to have last check mark display
                 // setTimeout(() => {}, 5000)
@@ -229,16 +228,16 @@ const checkUserInput = () => {
                     rando(numOfCards)
                     gameContainer.innerHTML = ''
                     displaySequence()
-                    ++correctLine
-                    if ((correctLine%4) === 0) {
+                        ++correctLine
+                    if ((correctLine % 4) === 0) {
                         ++numOfCards
                     }
 
                 }
             } else {
-                console.log('smh first',keySequenceArray[0])
+                console.log('smh first', keySequenceArray[0])
                 console.log('my keyyyyy', e.keyCode)
-                console.log("whole thing",keySequenceArray)
+                console.log("whole thing", keySequenceArray)
                 keySequenceArray = []
                 consecIndex = 0
                 rando(numOfCards)
@@ -328,7 +327,7 @@ startGameBtn.addEventListener('click', e => {
     restartGameBtn.classList.remove("hidden")
 })
 
-restartGameBtn.addEventListener('click', e =>{
+restartGameBtn.addEventListener('click', e => {
     consecIndex = 0
     correctLine = 0
     currentScore = 0
@@ -356,14 +355,14 @@ myStatsBtn.addEventListener('click', e => {
 })
 
 
-restartGameBtn.addEventListener('click', e =>{
-    consecIndex = 0
-    correctLine = 0
-    currentScore = 0
-    gameContainer.innerHTML = ""
-    keySequenceArray = []
-    gameScore.innerText = 0
-    gameSettings()
-    startGame()
+// restartGameBtn.addEventListener('click', e =>{
+//     consecIndex = 0
+//     correctLine = 0
+//     currentScore = 0
+//     gameContainer.innerHTML = ""
+//     keySequenceArray = []
+//     gameScore.innerText = 0
+//     gameSettings()
+//     startGame()
 
-})
+// })
