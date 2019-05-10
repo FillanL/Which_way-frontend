@@ -24,12 +24,13 @@ let keySequenceArray = [];
 let currentScore = 0
 let usersDifficulty;
 
+let randomNumber
 let currentPlayerId;
 let time = document.getElementById('time')
 let seconds
 let minutes = 0;
 let numOfCards
-let correctLines = 0;
+let correctLines = 1;
 let delaySeconds;
 let consecIndex = 0
 
@@ -142,44 +143,47 @@ const renderSequence = function () {
 
 //Function for reversing one arrow in the keySequenceArray
 const reverseArrow = function () {
-    let arrow;
-    let randomNumber = Math.floor(Math.random() * numOfCards)
-    switch (keySequenceArray[randomNumber]) {
-        case 37:
-            arrow = "fa-arrow-alt-circle-right"
-            break;
-        case 38:
-            arrow = "fa-arrow-alt-circle-down"
-            break;
 
-        case 39:
-            arrow = "fa-arrow-alt-circle-left"
-            break;
+        let arrow;
+        randomNumber = Math.floor(Math.random() * numOfCards)
+        switch (keySequenceArray[randomNumber]) {
+            case 37:
+                arrow = "fa-arrow-alt-circle-right"
+                break;
+            case 38:
+                arrow = "fa-arrow-alt-circle-down"
+                break;
 
-        case 40:
-            arrow = "fa-arrow-alt-circle-up"
-            break;
+            case 39:
+                arrow = "fa-arrow-alt-circle-left"
+                break;
 
-        default:
-            break;
-    }
-    gameContainer.children[randomNumber].children[0].classList.remove('fa-arrow-alt-circle-left',
+            case 40:
+                arrow = "fa-arrow-alt-circle-up"
+                break;
+
+            default:
+                break;
+        }
+
+        gameContainer.children[randomNumber].children[0].classList.remove('fa-arrow-alt-circle-left',
+
         'fa-arrow-alt-circle-right',
         'fa-arrow-alt-circle-up', 'fa-arrow-alt-circle-down', 'red')
     gameContainer.children[randomNumber].children[0].classList.add(`${arrow}`, 'green')
 }
 
 
-const startGame = () => {
-    seconds = 60
-    gameScore.classList.remove('hidden')
-    time.classList.remove('hidden')
-    startGameBtn.classList.add('hidden')
-    rando(numOfCards)
-    console.log(keySequenceArray)
-    // load sequence
-    displaySequence()
-    // checkUserInput()
+const startGame = () =>{
+  seconds = 45
+  gameScore.classList.remove('hidden')
+  time.classList.remove('hidden')
+  startGameBtn.classList.add('hidden')
+  rando(numOfCards)
+  console.log(keySequenceArray)
+  // load sequence
+  displaySequence()
+  // checkUserInput()
 
 }
 
@@ -257,6 +261,12 @@ const displaySequence = () => {
             )
 
         }, delaySeconds);
+        if (correctLines%5 === 0) {
+            console.log("before:", numOfCards)
+            numOfCards++
+            correctLines++
+            console.log("4 %",numOfCards, correctLines)
+        }
 }
 
 //user input conditions
@@ -285,15 +295,8 @@ document.addEventListener('keydown', e => {
                     rando(numOfCards)
                     gameContainer.innerHTML = ''
 
-                        ++correctLines
+                    ++correctLines
 
-                    if (correctLines % 4 === 0) {
-                        console.log("before:", numOfCards)
-                        numOfCards += 1
-                        console.log("4 %", numOfCards, correctLines)
-
-
-                    }
                     displaySequence()
                 }, 500)
             }
@@ -404,7 +407,7 @@ hiScoreBtn.addEventListener('click', (e) => {
 startGameBtn.addEventListener('click', e => {
     gameActive = true
     keySequenceArray = []
-    correctLines = 0
+    correctLines = 1
     currentScore = 0
     gameScore.innerText = 0
     gameContainer.innerHTML = ""
@@ -419,7 +422,7 @@ restartGameBtn.addEventListener('click', e => {
     clearTimeout(t)
     gameActive = true
     consecIndex = 0
-    correctLines = 0
+    correctLines = 1
     currentScore = 0
     gameContainer.innerHTML = ""
     keySequenceArray = []
@@ -427,6 +430,7 @@ restartGameBtn.addEventListener('click', e => {
     gameSettings()
     startGame()
     timer()
+
 })
 
 playInfo.addEventListener('click', e => {
