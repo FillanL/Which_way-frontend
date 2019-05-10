@@ -57,29 +57,29 @@ let postGameScore = () => {
 
 
 //changes delaySeconds and starting cards based on user input
-function gameSettings(){
-  switch (difficulty) {
-      case "Easy":
-          numOfCards = 2
-          delaySeconds = 3000
-          break;
+function gameSettings() {
+    switch (difficulty) {
+        case "Easy":
+            numOfCards = 2
+            delaySeconds = 3000
+            break;
 
-      case "Intermediate":
-          numOfCards = 2
-          delaySeconds = 2000
-          break;
+        case "Intermediate":
+            numOfCards = 2
+            delaySeconds = 2000
+            break;
 
-      case "Hard":
-          numOfCards = 3
-          delaySeconds = 2000
-          break;
+        case "Hard":
+            numOfCards = 3
+            delaySeconds = 2000
+            break;
 
-      default:
-          numOfCards = 2
-          delaySeconds = 2000
-          break;
+        default:
+            numOfCards = 2
+            delaySeconds = 2000
+            break;
 
-  }
+    }
 }
 
 function subtract() {
@@ -142,44 +142,44 @@ const renderSequence = function () {
 
 //Function for reversing one arrow in the keySequenceArray
 const reverseArrow = function () {
-        let arrow;
-        let randomNumber = Math.floor(Math.random() * numOfCards)
-        switch (keySequenceArray[randomNumber]) {
-            case 37:
-                arrow = "fa-arrow-alt-circle-right"
-                break;
-            case 38:
-                arrow = "fa-arrow-alt-circle-down"
-                break;
+    let arrow;
+    let randomNumber = Math.floor(Math.random() * numOfCards)
+    switch (keySequenceArray[randomNumber]) {
+        case 37:
+            arrow = "fa-arrow-alt-circle-right"
+            break;
+        case 38:
+            arrow = "fa-arrow-alt-circle-down"
+            break;
 
-            case 39:
-                arrow = "fa-arrow-alt-circle-left"
-                break;
+        case 39:
+            arrow = "fa-arrow-alt-circle-left"
+            break;
 
-            case 40:
-                arrow = "fa-arrow-alt-circle-up"
-                break;
+        case 40:
+            arrow = "fa-arrow-alt-circle-up"
+            break;
 
-            default:
-                break;
-        }
-        gameContainer.children[randomNumber].children[0].classList.remove('fa-arrow-alt-circle-left',
+        default:
+            break;
+    }
+    gameContainer.children[randomNumber].children[0].classList.remove('fa-arrow-alt-circle-left',
         'fa-arrow-alt-circle-right',
         'fa-arrow-alt-circle-up', 'fa-arrow-alt-circle-down', 'red')
-        gameContainer.children[randomNumber].children[0].classList.add(`${arrow}`, 'green')
+    gameContainer.children[randomNumber].children[0].classList.add(`${arrow}`, 'green')
 }
 
 
-const startGame = () =>{
-  seconds = 60
-  gameScore.classList.remove('hidden')
-  time.classList.remove('hidden')
-  startGameBtn.classList.add('hidden')
-  rando(numOfCards)
-  console.log(keySequenceArray)
-  // load sequence
-  displaySequence()
-  // checkUserInput()
+const startGame = () => {
+    seconds = 60
+    gameScore.classList.remove('hidden')
+    time.classList.remove('hidden')
+    startGameBtn.classList.add('hidden')
+    rando(numOfCards)
+    console.log(keySequenceArray)
+    // load sequence
+    displaySequence()
+    // checkUserInput()
 
 }
 
@@ -190,20 +190,21 @@ const getHiScores = () => {
         .then(allGames => {
             //sort highscores
             allGames.sort(compare)
+
             function compare(a, b) {
                 const scoreA = a.high_score;
                 const scoreB = b.high_score
 
                 let comparison = 0;
                 if (scoreA < scoreB) {
-                  comparison = 1;
+                    comparison = 1;
                 } else if (scoreA > scoreB) {
-                  comparison = -1;
+                    comparison = -1;
                 }
                 return comparison;
-              }
+            }
             // all game objects from database
-            allGames.slice(0,15).forEach(game => {
+            allGames.slice(0, 15).forEach(game => {
                 // for each player that played create a table row
                 const playerHiscorreRow = document.createElement('tr')
                 playerHiscorreRow.innerHTML = ``
@@ -232,14 +233,14 @@ const displaySequence = () => {
     renderSequence()
 
     switch (difficulty) {
-      case "Hard":
-      reverseArrow()
-      break;
+        case "Hard":
+            reverseArrow()
+            break;
 
-      default:
-      break;
+        default:
+            break;
     }
-    if (seconds > (delaySeconds/1000))
+    if (seconds > (delaySeconds / 1000))
 
         setTimeout(() => {
             const letterTiles = document.querySelectorAll('.letter-tile')
@@ -259,24 +260,24 @@ const displaySequence = () => {
 }
 
 //user input conditions
-    // listening for user input
-    document.addEventListener('keydown', e => {
-        if (allowKeyPress === true) {
-            if (e.keyCode === keySequenceArray[0]) {
+// listening for user input
+document.addEventListener('keydown', e => {
+    if (allowKeyPress === true) {
+        if (e.keyCode === keySequenceArray[0]) {
 
-                console.log('correct', e.key.slice(5).toLowerCase())
+            console.log('correct', e.key.slice(5).toLowerCase())
 
-                gameContainer.children[consecIndex].children[0].classList.remove(`fa-arrow-alt-circle-${e.key.slice(5).toLowerCase()}`, 'far', 'fas', 'fa-question')
+            gameContainer.children[consecIndex].children[0].classList.remove(`fa-arrow-alt-circle-${e.key.slice(5).toLowerCase()}`, 'far', 'fas', 'fa-question')
 
-                gameContainer.children[consecIndex].children[0].classList.add('fa-check', 'fas', 'green')
+            gameContainer.children[consecIndex].children[0].classList.add('fa-check', 'fas', 'green')
 
-                consecIndex++;
+            consecIndex++;
 
-                keySequenceArray.shift()
-                // try to have last check mark display
-                if (keySequenceArray.length === 0 && seconds !== 0) {
-                  allowKeyPress = false
-                  setTimeout(() => {
+            keySequenceArray.shift()
+            // try to have last check mark display
+            if (keySequenceArray.length === 0 && seconds !== 0) {
+                allowKeyPress = false
+                setTimeout(() => {
                     allowKeyPress = true
                     currentScore += 100
                     gameScore.innerText = currentScore
@@ -284,32 +285,32 @@ const displaySequence = () => {
                     rando(numOfCards)
                     gameContainer.innerHTML = ''
 
-                    ++correctLines
+                        ++correctLines
 
-                    if (correctLines%4 === 0) {
+                    if (correctLines % 4 === 0) {
                         console.log("before:", numOfCards)
                         numOfCards += 1
-                        console.log("4 %",numOfCards, correctLines)
+                        console.log("4 %", numOfCards, correctLines)
 
 
                     }
                     displaySequence()
-                  }, 500)
-                }
+                }, 500)
+            }
 
-            }   else {
-                console.log('smh first',keySequenceArray[0])
+        } else {
+            console.log('smh first', keySequenceArray[0])
 
-                console.log('my keyyyyy', e.keyCode)
-                console.log("whole thing", keySequenceArray)
-                keySequenceArray = []
-                consecIndex = 0
-                rando(numOfCards)
-                gameContainer.innerHTML = ''
-                displaySequence()
-              }
+            console.log('my keyyyyy', e.keyCode)
+            console.log("whole thing", keySequenceArray)
+            keySequenceArray = []
+            consecIndex = 0
+            rando(numOfCards)
+            gameContainer.innerHTML = ''
+            displaySequence()
         }
-    })
+    }
+})
 
 // function gameTimer()
 // *****************************************
@@ -337,7 +338,7 @@ newUserForm.addEventListener('submit', (e) => {
             loggedInUser = player.username
             newUserForm.classList.add('hidden');
             currentPlayer.innerHTML =
-            `
+                `
             <p> current player is ${loggedInUser}</p>
             <h3>${difficulty} MODE</h3>
             `
@@ -356,20 +357,20 @@ newUserForm.addEventListener('submit', (e) => {
 
 // logout, clears current user and hides logged in buttons
 logOutBtn.addEventListener('click', (e) => {
-    if (gameActive === false){
-    newUserForm.classList.remove('hidden');
-    loggedInUser = "";
-    currentPlayer.innerHTML = ""
-    gameContainer.innerHTML = ""
-    logOutBtn.classList.add("hidden")
-    startGameBtn.classList.add("hidden")
-    // myStatsBtn.classList.add("hidden")
-    restartGameBtn.classList.add("hidden")
-    gameScore.classList.add("hidden")
-    time.innerHTML = ''
-    time.classList.add("hidden")
+    if (gameActive === false) {
+        newUserForm.classList.remove('hidden');
+        loggedInUser = "";
+        currentPlayer.innerHTML = ""
+        gameContainer.innerHTML = ""
+        logOutBtn.classList.add("hidden")
+        startGameBtn.classList.add("hidden")
+        // myStatsBtn.classList.add("hidden")
+        restartGameBtn.classList.add("hidden")
+        gameScore.classList.add("hidden")
+        time.innerHTML = ''
+        time.classList.add("hidden")
 
-  }
+    }
 })
 
 // toggle hiscore menu when hiscore btn is clicked
@@ -401,7 +402,7 @@ hiScoreBtn.addEventListener('click', (e) => {
 
 
 startGameBtn.addEventListener('click', e => {
-  gameActive = true
+    gameActive = true
     keySequenceArray = []
     correctLines = 0
     currentScore = 0
@@ -414,9 +415,9 @@ startGameBtn.addEventListener('click', e => {
 })
 
 
-restartGameBtn.addEventListener('click', e =>{
-  clearTimeout(t)
-  gameActive = true
+restartGameBtn.addEventListener('click', e => {
+    clearTimeout(t)
+    gameActive = true
     consecIndex = 0
     correctLines = 0
     currentScore = 0
@@ -433,4 +434,4 @@ playInfo.addEventListener('click', e => {
     playArt.classList.value.includes('hidden') ?
         playArt.classList.remove('hidden') :
         playArt.classList.add('hidden');
-
+})
