@@ -217,3 +217,13 @@ th {
     font-size: 16px;
     background-color: #FFE66D;
 }
+
+#creators{
+  margin-bottom: 0px;
+  position: fixed;
+  bottom: 0;
+  padding-bottom: 20px;
+  color: #040926;
+  font-size: 1.3em;
+  font-weight: bold;
+}

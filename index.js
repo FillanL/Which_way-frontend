@@ -170,7 +170,7 @@ const reverseArrow = function () {
 
 
 const startGame = () =>{
-  seconds = 45
+  seconds = 60
   gameScore.classList.remove('hidden')
   time.classList.remove('hidden')
   startGameBtn.classList.add('hidden')
