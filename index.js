@@ -53,6 +53,7 @@ let postGameScore = () => {
     })
 }
 
+
 //changes delaySeconds and starting cards based on user input
 function gameSettings(){
   switch (difficulty) {
@@ -87,8 +88,7 @@ function subtract() {
 
         time.innerHTML = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "0") + ":" + (seconds > 9 ? seconds : "0" + seconds);
         timer();
-    }
-    else if (seconds === 0) {
+    } else if (seconds === 0) {
         allowKeyPress = false
         gameActive = false
         time.innerHTML = ""
@@ -137,6 +137,7 @@ const renderSequence = function () {
     }
 }
 
+
 //Function for reversing one arrow in the keySequenceArray
 const reverseArrow = function () {
         let arrow;
@@ -177,6 +178,7 @@ const startGame = () =>{
   // load sequence
   displaySequence()
   // checkUserInput()
+
 }
 
 // call hi-score from database
@@ -226,6 +228,7 @@ const rando = (x) => {
 const displaySequence = () => {
     allowKeyPress = false
     renderSequence()
+
     switch (difficulty) {
       case "Hard":
       reverseArrow()
@@ -235,6 +238,7 @@ const displaySequence = () => {
       break;
     }
     if (seconds > (delaySeconds/1000))
+
         setTimeout(() => {
             const letterTiles = document.querySelectorAll('.letter-tile')
             // debugge
@@ -263,7 +267,9 @@ const displaySequence = () => {
                 gameContainer.children[consecIndex].children[0].classList.remove(`fa-arrow-alt-circle-${e.key.slice(5).toLowerCase()}`, 'far', 'fas', 'fa-question')
 
                 gameContainer.children[consecIndex].children[0].classList.add('fa-check', 'fas', 'green')
+
                 consecIndex++;
+
                 keySequenceArray.shift()
                 // try to have last check mark display
                 if (keySequenceArray.length === 0 && seconds !== 0) {
@@ -275,6 +281,7 @@ const displaySequence = () => {
                     consecIndex = 0
                     rando(numOfCards)
                     gameContainer.innerHTML = ''
+
                     ++correctLines
 
                     if (correctLines%4 === 0) {
@@ -282,14 +289,17 @@ const displaySequence = () => {
                         numOfCards += 1
                         console.log("4 %",numOfCards, correctLines)
 
+
                     }
                     displaySequence()
                   }, 500)
                 }
+
             }   else {
                 console.log('smh first',keySequenceArray[0])
+
                 console.log('my keyyyyy', e.keyCode)
-                console.log("whole thing",keySequenceArray)
+                console.log("whole thing", keySequenceArray)
                 keySequenceArray = []
                 consecIndex = 0
                 rando(numOfCards)
@@ -370,7 +380,9 @@ hiScoreBtn.addEventListener('click', (e) => {
         getHiScores()
     }
 })
+
 // toggles stats of current user
+
 myStatsBtn.addEventListener('click', e => {
     fetch('http://localhost:3000/api/v1/games')
         .then(res => res.json())
@@ -398,6 +410,7 @@ startGameBtn.addEventListener('click', e => {
     restartGameBtn.classList.remove("hidden")
 })
 
+
 restartGameBtn.addEventListener('click', e =>{
   clearTimeout(t)
   gameActive = true
@@ -411,3 +424,4 @@ restartGameBtn.addEventListener('click', e =>{
     startGame()
     timer()
 })
+
