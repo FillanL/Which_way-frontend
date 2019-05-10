@@ -12,54 +12,87 @@
 </head>
 
 <body>
+    <div class="main">
 
-    <nav class="">
 
-    </nav>
+        <div class="box1">
+            <div class="logo">
+                Which Way ?
+            </div>
+            <ul>
+                <li><button id="how-to-play">How to play</button></li>
+                <li><button id="hi-score-btn">HiScores</button></li>
+                <li><button id="my-stats-btn" class="hidden">My Stats</button></li>
+                <li><button id="log-out-btn" class="hidden">Logout</button></li>
+                <li></li>
 
-    <button id="hi-score-btn"> HiScores
-    </button>
-    <button id="my-stats-btn" class="hidden"> My Stats
-    </button>
+            </ul>
+            <!-- <button id="hi-score-btn"> HiScores</button> -->
+            <!-- <button id="my-stats-btn" class="hidden"> My Stats</button> -->
+            <!-- <button id="log-out-btn" class="hidden"> Logout </button> -->
 
-    <button id="log-out-btn" class="hidden"> Logout </button>
+            <table id="hi-score-table" class="hidden">
+                <caption> Hi-Score</caption>
+                <th>Player</th>
+                <th>Difficulty</th>
+                <th>Score</th>
+                <tbody id="hi-score-body">
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="how-to-article" class="hidden">
+                <article>
+                    - First you enter a username to play this game and select difficulty.
+                    - After starting the game, you will be flashed a set of arrows keys.
+                    - You will have a few seconds to remember them, and then they will flip to “?” marks.
+                    - Now you can type the arrow keys in the same sequence that was shown.
+                    - If correct, your score will increase. Otherwise it means you “pressed the wrong key” .
+                    - The amount of arrow keys will increase along with your score.
+                    - You may restart by pressing the restart button but you cannot logout unless the game clock has
+                    ended.
+                    - ** HARD MODE ** When shown a green arrow, you must type in the opposite arrow for that position.
+                    - Have fun and enjoy our first ever created game!
+                </article>
+            </div>
+        </div>
 
-    <form id="create-username">
-        <input id="user" type="text" placeholder="Type in user name" required maxlength="7" minlength="1">
-        <select name="" id="user-diffculty">
-            <option value="Easy">Easy</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Hard">Hard</option>
-        </select>
-        <button id="" class="">LogIn</button>
-    </form>
-    <div id="current-player">
+        <div class="box2">
+            <div class="time-score">
+                <h2 id="game-score" class="hidden">0</h2>
+                <div id="current-player">
+                </div>
+                <h1 id="time" class="hidden">0:00</h1>
+            </div>
+
+
+
+            <form id="create-username">
+                <h2>Welcome </h2>
+                <h2>Login to Play </h2>
+                <input id="user" type="text" placeholder="Type in user name" required maxlength="7" minlength="1">
+                <select name="" id="user-diffculty">
+                    <option value="Easy">Easy</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Hard">Hard</option>
+                </select>
+                <button id="" class="">LogIn</button>
+            </form>
+
+            <div class="cover">
+                <div id="game-container" class="hidden">
+                </div>
+            </div>
+            <button id="game-restart-btn" class="hidden">Restart Game</button>
+
+            <button id="game-start-btn" class="hidden">Start Game
+            </button>
+        </div>
     </div>
 
-    <table id="hi-score-table" class="hidden">
-        <caption> Hi-Score</caption>
-        <th>Player</th>
-        <th>Difficulty</th>
-        <th>Score</th>
-        <tbody id="hi-score-body">
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h1 id="time" class="hidden">0:00</h1>
-    <h2 id="game-score" class="hidden">0</h2>
-    <button id="game-restart-btn" class="hidden">Restart Game</button>
-    <div id="game-container" class="hidden">
-    </div>
-
-    <button id="game-start-btn" class="hidden">Start Game
-    </button>
-    <button id="end-game-btn" class="hidden">End Game
-    </button>
 
     <script src="index.js"></script>
 </body>
