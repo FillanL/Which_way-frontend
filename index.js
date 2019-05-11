@@ -15,6 +15,8 @@ const gameScore = document.querySelector('#game-score')
 const restartGameBtn = document.querySelector('#game-restart-btn')
 const playInfo = document.querySelector('#how-to-play')
 const playArt = document.querySelector('#how-to-article')
+const gameCover = document.querySelector('#game-cover')
+
 // const myStatsBtn = document.querySelector('#my-stats-btn')
 
 let gameActive = false;
@@ -95,7 +97,7 @@ function subtract() {
         allowKeyPress = false
         gameActive = false
         time.innerHTML = ""
-        time.innerText = "Game Over!!"
+        time.innerText = "Game Over"
         postGameScore();
     }
 }
@@ -144,29 +146,29 @@ const renderSequence = function () {
 //Function for reversing one arrow in the keySequenceArray
 const reverseArrow = function () {
 
-        let arrow;
-        randomNumber = Math.floor(Math.random() * numOfCards)
-        switch (keySequenceArray[randomNumber]) {
-            case 37:
-                arrow = "fa-arrow-alt-circle-right"
-                break;
-            case 38:
-                arrow = "fa-arrow-alt-circle-down"
-                break;
+    let arrow;
+    randomNumber = Math.floor(Math.random() * numOfCards)
+    switch (keySequenceArray[randomNumber]) {
+        case 37:
+            arrow = "fa-arrow-alt-circle-right"
+            break;
+        case 38:
+            arrow = "fa-arrow-alt-circle-down"
+            break;
 
-            case 39:
-                arrow = "fa-arrow-alt-circle-left"
-                break;
+        case 39:
+            arrow = "fa-arrow-alt-circle-left"
+            break;
 
-            case 40:
-                arrow = "fa-arrow-alt-circle-up"
-                break;
+        case 40:
+            arrow = "fa-arrow-alt-circle-up"
+            break;
 
-            default:
-                break;
-        }
+        default:
+            break;
+    }
 
-        gameContainer.children[randomNumber].children[0].classList.remove('fa-arrow-alt-circle-left',
+    gameContainer.children[randomNumber].children[0].classList.remove('fa-arrow-alt-circle-left',
 
         'fa-arrow-alt-circle-right',
         'fa-arrow-alt-circle-up', 'fa-arrow-alt-circle-down', 'red')
@@ -174,16 +176,16 @@ const reverseArrow = function () {
 }
 
 
-const startGame = () =>{
-  seconds = 45
-  gameScore.classList.remove('hidden')
-  time.classList.remove('hidden')
-  startGameBtn.classList.add('hidden')
-  rando(numOfCards)
-  console.log(keySequenceArray)
-  // load sequence
-  displaySequence()
-  // checkUserInput()
+const startGame = () => {
+    seconds = 45
+    gameScore.classList.remove('hidden')
+    time.classList.remove('hidden')
+    startGameBtn.classList.add('hidden')
+    rando(numOfCards)
+    // console.log(keySequenceArray)
+    // load sequence
+    displaySequence()
+    // checkUserInput()
 
 }
 
@@ -261,12 +263,12 @@ const displaySequence = () => {
             )
 
         }, delaySeconds);
-        if (correctLines%5 === 0) {
-            console.log("before:", numOfCards)
-            numOfCards++
-            correctLines++
-            console.log("4 %",numOfCards, correctLines)
-        }
+    if (correctLines % 5 === 0) {
+        // console.log("before:", numOfCards)
+        numOfCards++
+        correctLines++
+        // console.log("4 %", numOfCards, correctLines)
+    }
 }
 
 //user input conditions
@@ -275,7 +277,7 @@ document.addEventListener('keydown', e => {
     if (allowKeyPress === true) {
         if (e.keyCode === keySequenceArray[0]) {
 
-            console.log('correct', e.key.slice(5).toLowerCase())
+            // console.log('correct', e.key.slice(5).toLowerCase())
 
             gameContainer.children[consecIndex].children[0].classList.remove(`fa-arrow-alt-circle-${e.key.slice(5).toLowerCase()}`, 'far', 'fas', 'fa-question')
 
@@ -295,17 +297,17 @@ document.addEventListener('keydown', e => {
                     rando(numOfCards)
                     gameContainer.innerHTML = ''
 
-                    ++correctLines
+                        ++correctLines
 
                     displaySequence()
                 }, 500)
             }
 
         } else {
-            console.log('smh first', keySequenceArray[0])
+            // console.log('smh first', keySequenceArray[0])
 
-            console.log('my keyyyyy', e.keyCode)
-            console.log("whole thing", keySequenceArray)
+            // console.log('my keyyyyy', e.keyCode)
+            // console.log("whole thing", keySequenceArray)
             keySequenceArray = []
             consecIndex = 0
             rando(numOfCards)
@@ -351,6 +353,8 @@ newUserForm.addEventListener('submit', (e) => {
     newUserForm.reset()
     logOutBtn.classList.remove("hidden")
     startGameBtn.classList.remove("hidden")
+    gameCover.classList.remove('hidden')
+
     // myStatsBtn.classList.remove("hidden")
 })
 
@@ -361,6 +365,7 @@ newUserForm.addEventListener('submit', (e) => {
 // logout, clears current user and hides logged in buttons
 logOutBtn.addEventListener('click', (e) => {
     if (gameActive === false) {
+        gameCover.classList.add('hidden')
         newUserForm.classList.remove('hidden');
         loggedInUser = "";
         currentPlayer.innerHTML = ""
@@ -435,7 +440,13 @@ restartGameBtn.addEventListener('click', e => {
 
 playInfo.addEventListener('click', e => {
 
-    playArt.classList.value.includes('hidden') ?
-        playArt.classList.remove('hidden') :
+    if (playArt.classList.value.includes('hidden')) {
+        playArt.classList.remove('hidden')
+
+        // boxTwo.classList.add('hidden');
+    } else {
         playArt.classList.add('hidden');
+        // bowTwo.classList.remove('hidden');
+
+    }
 })

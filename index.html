@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Shadows+Into+Light" rel="stylesheet">
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
@@ -17,8 +19,7 @@
 
         <div class="box1">
             <div class="logo">
-
-                Which Way ?
+                WHICH WAY?
             </div>
             <ul>
                 <li><button id="how-to-play">How to play</button></li>
@@ -46,21 +47,8 @@
                     </tr>
                 </tbody>
             </table>
-            <div id="how-to-article" class="hidden">
-                <article>
-                    - First you enter a username to play this game and select difficulty.
-                    - After starting the game, you will be flashed a set of arrows keys.
-                    - You will have a few seconds to remember them, and then they will flip to “?” marks.
-                    - Now you can type the arrow keys in the same sequence that was shown.
-                    - If correct, your score will increase. Otherwise it means you “pressed the wrong key” .
-                    - The amount of arrow keys will increase along with your score.
-                    - You may restart by pressing the restart button but you cannot logout unless the game clock has
-                    ended.
-                    - ** HARD MODE ** When shown a green arrow, you must type in the opposite arrow for that position.
-                    - Have fun and enjoy our first ever created game!
-                </article>
+            <div id="creators">Created by Fillan Lee & Tommy Lau
             </div>
-            <div id="creators">Created by Fillan Lee & Tommy Lau</div>
         </div>
 
         <div class="box2">
@@ -85,7 +73,7 @@
                 <button id="" class="">LogIn</button>
             </form>
 
-            <div class="cover">
+            <div id="game-cover" class="cover hidden">
                 <div id="game-container" class="hidden">
                 </div>
             </div>
@@ -94,6 +82,42 @@
             <button id="game-start-btn" class="hidden">Start Game
             </button>
         </div>
+    </div>
+    <div id="how-to-article" class="hidden">
+        <h1>Instructions</h1>
+
+        <article>
+            <p>
+                - First you enter a username to play this game and select difficulty.
+            </p>
+            <p>
+                - After starting the game, you will be flashed a set of arrows keys.
+            </p>
+            <p>
+                - You will have a few seconds to remember them, and then they will flip to “?” marks.
+            </p>
+            <p>
+                - Now you can type the arrow keys in the same sequence that was shown.
+            </p>
+            <p>
+                - If correct, your score will increase. Otherwise it means you “pressed the wrong key” .
+            </p>
+            <p>
+                - The amount of arrow keys will increase along with your score.
+            </p>
+            <p>
+                - You may restart by pressing the restart button but you cannot logout unless the game clock has
+                ended.
+            </p>
+            <p class="text-center"> ***************** HARD MODE **************** </p>
+            <p>
+                -When shown a green arrow, you must type in the opposite arrow for that
+                position.
+            </p>
+            <p>
+                - Have fun and enjoy our first ever created game!
+            </p>
+        </article>
     </div>
 
     <script src="index.js"></script>
