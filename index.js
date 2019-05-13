@@ -69,7 +69,7 @@ function gameSettings() {
 
         case "Intermediate":
             numOfCards = 2
-            delaySeconds = 2000
+            delaySeconds = 2500
             break;
 
         case "Hard":
@@ -91,7 +91,7 @@ function subtract() {
         seconds--;
         // return
 
-        time.innerHTML = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "0") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+        time.innerHTML = (seconds > 9 ? seconds : "0" + seconds);
         timer();
     } else if (seconds === 0) {
         allowKeyPress = false
@@ -177,7 +177,7 @@ const reverseArrow = function () {
 
 
 const startGame = () => {
-    seconds = 45
+    seconds = 75
     gameScore.classList.remove('hidden')
     time.classList.remove('hidden')
     startGameBtn.classList.add('hidden')
