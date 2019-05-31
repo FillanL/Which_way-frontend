@@ -326,7 +326,7 @@ document.addEventListener('keydown', e => {
 newUserForm.addEventListener('submit', (e) => {
     e.preventDefault()
     difficulty = userDifficultySelect.value
-    fetch('https://whichwayyy.herokuapp.com/api/v1/games', {
+    fetch('https://whichwayyy.herokuapp.com/api/v1/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
