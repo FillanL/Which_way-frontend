@@ -44,7 +44,7 @@ let consecIndex = 0
 // *****************************************
 
 let postGameScore = () => {
-    fetch('http://localhost:3000/api/v1/newgame', {
+    fetch('https://whichwayyy.herokuapp.com/api/v1/games', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -326,7 +326,7 @@ document.addEventListener('keydown', e => {
 newUserForm.addEventListener('submit', (e) => {
     e.preventDefault()
     difficulty = userDifficultySelect.value
-    fetch('http://localhost:3000/api/v1/games', {
+    fetch('https://whichwayyy.herokuapp.com/api/v1/games', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
