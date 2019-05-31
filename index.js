@@ -191,7 +191,7 @@ const startGame = () => {
 
 // call hi-score from database
 const getHiScores = () => {
-    fetch('http://localhost:3000/api/v1/games')
+    fetch('https://whichwayyy.herokuapp.com/api/v1/games')
         .then(res => res.json())
         .then(allGames => {
             //sort highscores
@@ -297,7 +297,7 @@ document.addEventListener('keydown', e => {
                     rando(numOfCards)
                     gameContainer.innerHTML = ''
 
-                        ++correctLines
+                    ++correctLines
 
                     displaySequence()
                 }, 500)
@@ -327,16 +327,16 @@ newUserForm.addEventListener('submit', (e) => {
     e.preventDefault()
     difficulty = userDifficultySelect.value
     fetch('https://whichwayyy.herokuapp.com/api/v1/users', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
 
-                username: newUser.value.toUpperCase(),
-            }),
-        })
+            username: newUser.value.toUpperCase(),
+        }),
+    })
         .then(res => res.json())
         .then(player => {
 
