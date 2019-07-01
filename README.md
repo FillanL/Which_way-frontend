@@ -1,6 +1,6 @@
 # Which Way?
 Desktop timed Memory Game using arrow keys
-https://fillanl.github.io/memory-game-frontend/
+- https://fillanl.github.io/memory-game-frontend/
 
 ## Tech/framework used
 Vanilla Javascript
@@ -16,11 +16,9 @@ Custom CSS using CSS Grid
 - If correct, your score will increase. Otherwise it means you “pressed the wrong key”.
 - The amount of arrow keys will increase along with your score.
 - You may restart by pressing the restart button but you cannot logout unless the game clock has ended.
-***************** HARD MODE ****************
-
--When shown a green arrow, you must type in the opposite arrow for that position.
+  ***************** HARD MODE ****************
+- When shown a green arrow, you must type in the opposite arrow for that position.
 - Have fun and enjoy our first ever created game!
 
 ## Video Demo
-http://github.com - automatic!
-[GitHub](http://github.com)
+https://www.youtube.com/watch?v=gw0eGh0L5TA&t=72s
